@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Lab2Graph
 {
-    
-    public class Graph
+    class Graph
     {
         private Dictionary<int, List<int>> adjacencyList;
 
-        public Graph(Dictionary<int, List<int>> adjacencyList)
+        public Graph()
         {
-            this.adjacencyList = adjacencyList;
+            adjacencyList = new Dictionary<int, List<int>>();
         }
+
         public void AddVertex(int vertex)
         {
             if (!adjacencyList.ContainsKey(vertex))
@@ -26,6 +26,7 @@ namespace Lab2Graph
                 Console.WriteLine("Вершина уже существует!");
             }
         }
+
         public void AddEdge(int source, int destination)
         {
             if (adjacencyList.ContainsKey(source) && adjacencyList.ContainsKey(destination))
@@ -37,6 +38,7 @@ namespace Lab2Graph
                 Console.WriteLine("Одна или обе вершины не существуют!");
             }
         }
+
         public void PrintAdjacencyList()
         {
             foreach (var vertex in adjacencyList)
@@ -49,14 +51,14 @@ namespace Lab2Graph
                 Console.WriteLine();
             }
         }
+
         public bool HasCycle()
         {
             HashSet<int> visited = new HashSet<int>();
-            HashSet<int> currentlyVisited = new HashSet<int>();
 
             foreach (var vertex in adjacencyList.Keys)
             {
-                if (DFS(vertex, visited, currentlyVisited))
+                if (DFS(vertex, visited, new HashSet<int>()))
                 {
                     return true;
                 }
@@ -64,13 +66,11 @@ namespace Lab2Graph
 
             return false;
         }
+
         private bool DFS(int vertex, HashSet<int> visited, HashSet<int> currentlyVisited)
         {
             if (currentlyVisited.Contains(vertex))
             {
-                List<int> cycle = new List<int>(currentlyVisited);
-                cycle.Reverse();
-                Console.WriteLine("Цикл найден: " + string.Join(" -> ", cycle));
                 return true;
             }
 
@@ -93,6 +93,5 @@ namespace Lab2Graph
             currentlyVisited.Remove(vertex);
             return false;
         }
-
     }
 }

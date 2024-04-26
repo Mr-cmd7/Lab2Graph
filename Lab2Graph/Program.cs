@@ -1,21 +1,34 @@
 ﻿using Lab2Graph;
 
-Dictionary<int, List<int>> adjacencyList = new Dictionary<int, List<int>>
-    {
-        { 1, new List<int> { 2, 3 } },
-        { 2, new List<int> { 4 } },
-        { 3, new List<int> { 5 } },
-        { 4, new List<int> { 5 } },
-        { 5, new List<int>() } // Для вершины без исходящих рёбер
-    };
-
-Graph graph = new Graph(adjacencyList);
-
-Console.WriteLine("Список смежности:");
-graph.PrintAdjacencyList();
-
-Console.WriteLine("\nПроверка наличия циклов:");
-if (!graph.HasCycle())
+class Program
 {
-    Console.WriteLine("Циклы не найдены.");
+    static void Main(string[] args)
+    {
+        Graph graph = new Graph();
+
+        graph.AddVertex(1);
+        graph.AddVertex(2);
+        graph.AddVertex(3);
+        graph.AddVertex(4);
+        graph.AddVertex(5);
+
+        graph.AddEdge(1, 2);
+        graph.AddEdge(1, 3);
+        graph.AddEdge(2, 4);
+        graph.AddEdge(3, 5);
+        graph.AddEdge(4, 5);
+
+        Console.WriteLine("Список смежности:");
+        graph.PrintAdjacencyList();
+
+        Console.WriteLine("\nПроверка наличия циклов:");
+        if (graph.HasCycle())
+        {
+            Console.WriteLine("Циклы найдены.");
+        }
+        else
+        {
+            Console.WriteLine("Циклы не найдены.");
+        }
+    }
 }
